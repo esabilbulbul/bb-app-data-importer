@@ -85,7 +85,7 @@ public class BbAppDekonts
                 if (index ==0)
                     bDataStarted = false;
                     
-                if (bDataStarted==true)
+                if (bDataStarted==true) 
                 {
                     boolean bRecordYes = false;
                     
