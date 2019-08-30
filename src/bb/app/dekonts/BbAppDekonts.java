@@ -54,11 +54,11 @@ public class BbAppDekonts
             //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             String[] Lines = st.split("\\n");
             
-            DekontDefs CurDefs = new DekontDefs();
+            DekontStructure CurDefs = new DekontStructure();
 
             //YKB DEKONT FORMAT/DEFINITIONS
             //------------------------------------------------------------------            
-            DekontDefs YKBDefs = new DekontDefs();
+            DekontStructure YKBDefs = new DekontStructure();
             YKBDefs.TMP_LBL_END     = "YAPI VE KREDİ BANKASI A.Ş";
             YKBDefs.TMP_LBL_START   = "İşlem Tutarı";
             YKBDefs.DATA_TXNTYPE_SALE             = "PEŞİNSATIŞ";
@@ -69,7 +69,7 @@ public class BbAppDekonts
 
             //ISBANK DEKONT FORMAT/DEFINITIONS
             //------------------------------------------------------------------
-            DekontDefs IsbankDefs = new DekontDefs();
+            DekontStructure IsbankDefs = new DekontStructure();
             IsbankDefs.TMP_LBL_END     = "Sayfa ";
             IsbankDefs.TMP_LBL_START   = "Bakiyesi İşlem İşlem Tipi Açıklama";
             IsbankDefs.DATA_TXNTYPE_SALE             = "NET SATIŞ TUTAR";
@@ -183,7 +183,7 @@ public class BbAppDekonts
         }
     }
     
-    public static String findTxnType(DekontDefs pBankDefs, String pDataLine)
+    public static String findTxnType(DekontStructure pBankDefs, String pDataLine)
     {
         boolean bRecordYes = false;
         String lineN = pDataLine;

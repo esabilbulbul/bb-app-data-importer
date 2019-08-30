@@ -9,7 +9,7 @@ package bb.app.dekonts;
  *
  * @author Administrator
  */
-public class DekontDefs 
+public class DekontStructure 
 {
     public int    BankCode;
     
