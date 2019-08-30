@@ -9,6 +9,15 @@ package bb.app.dekonts;
  *
  * @author Administrator
  */
-public class DekontFields {
-    
+public class DekontFields 
+{
+    public String TxnType;
+    public String Date = "";
+    public String Release = "";
+    public String Desc = "";
+    public String Amount = "";
+    public String Time = "";
+    public String Balance = "";
+    public String TraceNo = "";
+    public String MonthNo = "";    
 }

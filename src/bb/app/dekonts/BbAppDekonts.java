@@ -137,7 +137,9 @@ public class BbAppDekonts
                     {
                         //lineN = sTxnType + "\t" + lineN;
                         String sNewLine = "";
-                        sNewLine = parseDataLine(BANK_CODE_ISBANK, sTxnType, lineN);
+                        DekontFields fields = new DekontFields();
+                        fields = parseDataLine(BANK_CODE_ISBANK, sTxnType, lineN);
+                        sNewLine = generateNewFormattedLine(fields);
                         //sNewLine = parseYKBDataLine(sTxnType, lineN);
 
                         System.out.println(lineN);
@@ -244,7 +246,7 @@ public class BbAppDekonts
     /*
         This returns 
     */
-    public static String parseDataLine(int piBankCode, String psTxnType, String pDataLine)
+    public static DekontFields parseDataLine(int piBankCode, String psTxnType, String pDataLine)
     {
         int i = 0;
         
@@ -259,17 +261,18 @@ public class BbAppDekonts
                 return parseIsbankDataLine(psTxnType, pDataLine);
         }
 
-        return "";
+        return new DekontFields();
     }
 
     /*
         Warning: 
     */
-    public static String parseIsbankDataLine(String psTxnType, String pDataLine)
+    public static DekontFields parseIsbankDataLine(String psTxnType, String pDataLine)
     {
+        
         String[] sCols  = pDataLine.split(" ");
         
-        return "";
+        return new DekontFields();
     }
     
     /*
@@ -280,9 +283,12 @@ public class BbAppDekonts
         However, when read
         Tarih(1), Tutar(2), Bakiye + Valor (3) + ....
     */
-    public static String parseYKBDataLine(String psTxnType, String pYKBDataLine)
+    public static DekontFields parseYKBDataLine(String psTxnType, String pYKBDataLine)
     {
         String sColTxnType = psTxnType;
+        DekontFields fields = new DekontFields();
+        fields.TxnType = psTxnType;
+        /*
         String sColDate = "";
         String sColRelease = "";
         String sColDesc = "";
@@ -291,6 +297,7 @@ public class BbAppDekonts
         String sColBalance = "";
         String sColTraceNo = "";
         String sColMonthNo = "";
+        */
 
         //String sNewLine = lineN.replaceAll(" ", "\t");
         String[] sCols  = pYKBDataLine.split(" ");
@@ -303,26 +310,30 @@ public class BbAppDekonts
             {
                 case 0:
                     //Txn Date
-                    sColDate = sColData;
+                    //sColDate = sColData;
+                    fields.Date = sColData;
+                    String[] sDateParts = fields.Date.split("\\.");
 
-                    String[] sDateParts = sColDate.split("\\.");
-
-                    sColMonthNo = sDateParts[1];
+                    //sColMonthNo = sDateParts[1];
+                    fields.MonthNo = sDateParts[1];
 
                     break;
                 case 6:
                     //Time Date
-                    sColTime = sColData;
-
+                    //sColTime = sColData;
+                    fields.Time = sColData;
+                    
                     break;
                 case 1:
                     //Desc
-                    sColDesc = sColData;
-
+                    //sColDesc = sColData;
+                    fields.Desc = sColData;
+                    
                     break;
                 case 2:
                     //Amount
-                    sColAmount = sColData;
+                    //sColAmount = sColData;
+                    fields.Amount = sColData;
 
                     break;
                 case 3:
@@ -332,18 +343,24 @@ public class BbAppDekonts
 
                     int index1stDot = sBalNRelease.indexOf(".");
 
-                    sColBalance = sBalNRelease.substring(0, index1stDot + 2 + 1);
-                    sColRelease = sBalNRelease.substring(index1stDot + 2 + 1);
+                    //sColBalance = sBalNRelease.substring(0, index1stDot + 2 + 1);
+                    //sColRelease = sBalNRelease.substring(index1stDot + 2 + 1);
 
+                    fields.Balance = sBalNRelease.substring(0, index1stDot + 2 + 1);
+                    fields.Release = sBalNRelease.substring(index1stDot + 2 + 1);
+                            
                     break;
                 case 5:
                     // Trance No
-                    sColTraceNo = sColData;
-
+                    //sColTraceNo = sColData;
+                    fields.TraceNo = sColData;
+                    
                     break;
             }
         }
 
+        return fields;
+        /*
         String sNewLine =   sColTxnType + "\t" + 
                             sColDate + "\t" + 
                             sColRelease + "\t" + 
@@ -353,6 +370,22 @@ public class BbAppDekonts
                             sColBalance + "\t" + 
                             sColTraceNo + "\t" + 
                             sColMonthNo;
+        
+        return sNewLine;
+        */
+    }
+    
+    public static String generateNewFormattedLine(DekontFields pFields)
+    {
+        String sNewLine =   pFields.TxnType + "\t" + 
+                            pFields.Date + "\t" + 
+                            pFields.Release + "\t" + 
+                            pFields.Desc + "\t" + 
+                            pFields.Amount + "\t" + 
+                            pFields.Time + "\t" + 
+                            pFields.Balance + "\t" + 
+                            pFields.TraceNo + "\t" + 
+                            pFields.MonthNo;
         
         return sNewLine;
     }
