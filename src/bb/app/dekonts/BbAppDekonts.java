@@ -5,6 +5,8 @@
  */
 package bb.app.dekonts;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author esabil
@@ -15,12 +17,16 @@ public class BbAppDekonts
     {
         try
         {
-            String sInFilePath  = "/Users/esabil/Documents/files/64050199824_20190829_16393162_HesapOzeti.pdf";//isbank
-            String sOutFilePath = "/Users/esabil/Documents/files/dekont_summary.txt";
+            //String sInFilePath  = "/Users/esabil/Documents/files/64050199824_20190829_16393162_HesapOzeti.pdf";//isbank
+            //String sInFilePath  = "/Users/esabil/Documents/files/64050199824_20190829_16393162_HesapOzeti.pdf";//isbank
+            //String sInFilePath  = "/Users/esabil/Documents/files/KUVEYT_Musterino_6667543_Ekno_1_2019910152032_ekstre.pdf";
+            String sInFilePath  = "/Users/esabil/Documents/files/KUVEYT_Musterino_6667543_Ekno_3900_201991015217_ekstre.pdf";
+            String sOutFilePath = "/Users/esabil/Documents/files/dekont_summary.txt";//output file
             
-            boolean rc = DekontMethods.processFile(sInFilePath, sOutFilePath);
+            ArrayList<DekontFields> flds = DekontMethods.processFile(sInFilePath, sOutFilePath, false);
             
-            System.out.println(rc);
+            
+            //System.out.println(rc);
         }
         catch(Exception e)
         {
