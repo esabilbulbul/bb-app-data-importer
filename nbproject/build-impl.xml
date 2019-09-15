@@ -1081,8 +1081,8 @@ is divided into following sections:
         </propertyfile>
         <antcall target="-maybe-call-dep">
             <param name="call.built.properties" value="${built-jar.properties}"/>
-            <param location="${project.bb-lib-dekont-converter}" name="call.subproject"/>
-            <param location="${project.bb-lib-dekont-converter}/build.xml" name="call.script"/>
+            <param location="${project.bb-lib-dekont-converter-1}" name="call.subproject"/>
+            <param location="${project.bb-lib-dekont-converter-1}/build.xml" name="call.script"/>
             <param name="call.target" value="jar"/>
             <param name="transfer.built-jar.properties" value="${built-jar.properties}"/>
             <param name="transfer.not.archive.disabled" value="true"/>
@@ -1090,8 +1090,8 @@ is divided into following sections:
         </antcall>
         <antcall target="-maybe-call-dep">
             <param name="call.built.properties" value="${built-jar.properties}"/>
-            <param location="${project.jax-lib-util-1}" name="call.subproject"/>
-            <param location="${project.jax-lib-util-1}/build.xml" name="call.script"/>
+            <param location="${project.jax-lib-util}" name="call.subproject"/>
+            <param location="${project.jax-lib-util}/build.xml" name="call.script"/>
             <param name="call.target" value="jar"/>
             <param name="transfer.built-jar.properties" value="${built-jar.properties}"/>
             <param name="transfer.not.archive.disabled" value="true"/>
@@ -1755,8 +1755,8 @@ is divided into following sections:
         </propertyfile>
         <antcall target="-maybe-call-dep">
             <param name="call.built.properties" value="${built-clean.properties}"/>
-            <param location="${project.bb-lib-dekont-converter}" name="call.subproject"/>
-            <param location="${project.bb-lib-dekont-converter}/build.xml" name="call.script"/>
+            <param location="${project.bb-lib-dekont-converter-1}" name="call.subproject"/>
+            <param location="${project.bb-lib-dekont-converter-1}/build.xml" name="call.script"/>
             <param name="call.target" value="clean"/>
             <param name="transfer.built-clean.properties" value="${built-clean.properties}"/>
             <param name="transfer.not.archive.disabled" value="true"/>
@@ -1764,8 +1764,8 @@ is divided into following sections:
         </antcall>
         <antcall target="-maybe-call-dep">
             <param name="call.built.properties" value="${built-clean.properties}"/>
-            <param location="${project.jax-lib-util-1}" name="call.subproject"/>
-            <param location="${project.jax-lib-util-1}/build.xml" name="call.script"/>
+            <param location="${project.jax-lib-util}" name="call.subproject"/>
+            <param location="${project.jax-lib-util}/build.xml" name="call.script"/>
             <param name="call.target" value="clean"/>
             <param name="transfer.built-clean.properties" value="${built-clean.properties}"/>
             <param name="transfer.not.archive.disabled" value="true"/>
