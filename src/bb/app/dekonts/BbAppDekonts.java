@@ -65,7 +65,7 @@ public class BbAppDekonts
             reader.close();
 
             
-            
+            //esabil bulbul
             String sDate = DekontMisc.formatDate("13/08/2019");
             
             ArrayList<DekontFields> flds = DekontMethods.processFile(sInFilePath, sOutFilePath, false, "NECATİ BÜLBÜL");
