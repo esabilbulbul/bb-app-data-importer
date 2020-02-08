@@ -15,6 +15,8 @@ import jaxesa.util.Util;
 /**
  *
  * @author esabil
+ * 
+ * commit dec 5 2019 
  */
 public class BbAppDekonts 
 {
@@ -37,7 +39,7 @@ public class BbAppDekonts
 //            sMsg = prepareMessage("1", "en", "tr", "141230", "1", "2019", "1", "12","1200.40");
 
             //String sFileKasa = "/Users/esabil/Documents/files/kasa2018_4.txt";
-            String sFileKasa = "/Users/esabil/Documents/files/kasa2019_1.txt";
+            String sFileKasa = "/Users/esabil/Documents/files/kasa2020_1.txt";
             BufferedReader reader = new BufferedReader(new FileReader(sFileKasa)); 
             String line = reader.readLine();
             int i = 0;
@@ -64,13 +66,13 @@ public class BbAppDekonts
             }
             reader.close();
 
-            
+
             //esabil bulbul
             String sDate = DekontMisc.formatDate("13/08/2019");
-            
+
             ArrayList<DekontFields> flds = DekontMethods.processFile(sInFilePath, sOutFilePath, false, "NECATİ BÜLBÜL");
-            
-            
+
+
             //System.out.println(rc);
         }
         catch(Exception e)
