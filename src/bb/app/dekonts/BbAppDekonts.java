@@ -24,6 +24,13 @@ public class BbAppDekonts
     {
         try
         {
+            String TOKEN_ENCODE_SIGN = "\\*ESA\\*";
+            
+            String test = "adsfas asfsafasfa==";
+            
+            test = test.replaceAll("=", TOKEN_ENCODE_SIGN);
+            test = test.replaceAll(TOKEN_ENCODE_SIGN, "=");
+            
             //String sInFilePath  = "/Users/esabil/Documents/files/Hesap_Hareket_Detay_64265549_TL.pdf";//isbank
             //String sInFilePath  = "/Users/esabil/Documents/files/64050199824_20190829_16393162_HesapOzeti.pdf";//isbank
             String sInFilePath  = "/Users/esabil/Documents/files/YKB_Hesap_Hareket_Detay_64265549_TL.pdf";//isbank
