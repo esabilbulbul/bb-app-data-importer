@@ -5,12 +5,17 @@
  */
 package bb.app.dekonts;
 
+import jaxesa.redis.RedisAPI;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Scanner;
 import jaxesa.util.Util;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 /**
  *
@@ -24,13 +29,54 @@ public class BbAppDekonts
     {
         try
         {
+            //================================================================
+            // 
+            // REDIS TEST
+            // 
+            //================================================================
+            /*
+            Jedis jedis = new Jedis("localhost");
+            System.out.println(jedis.ping());
+            System.out.println("jedis ping successful");
+            jedis.set("name", "esa");
+            System.out.println("redis key" + " name" + ":" + jedis.get("name"));
+            */
+            /*
+            try
+            {
+                //Jedis jedis = new Jedis("localhost");
+                //System.out.println(jedis.ping());
+
+                //poolConfig.setMaxTotal(128);
+                //JedisPool jedisPool = new JedisPool(poolConfig, "127.0.0.1", 6379, 10000, "");
+
+                //JedisPool gJedisPool = new JedisPool("localhost", 6379);
+
+                Util.Redis.connect("localhost", 6379);
+                Jedis jedis = RedisAPI.getConnection();
+                Util.Redis.JString.set(jedis, "esa", "bil");
+                String s = Util.Redis.JString.get(jedis, "esa");
+
+                long x = Util.Redis.JNumber.increase(jedis, "test", 2);
+
+                x = Util.Redis.JNumber.decrease(jedis, "test", 1);
+
+                s += "---";
+            }
+            catch(Exception e)
+            {
+                String s = e.getMessage();
+            }
+            */
+
             String TOKEN_ENCODE_SIGN = "\\*ESA\\*";
-            
+
+
             String test = "adsfas asfsafasfa==";
-            
+
             test = test.replaceAll("=", TOKEN_ENCODE_SIGN);
             test = test.replaceAll(TOKEN_ENCODE_SIGN, "=");
-            
+
             //String sInFilePath  = "/Users/esabil/Documents/files/Hesap_Hareket_Detay_64265549_TL.pdf";//isbank
             //String sInFilePath  = "/Users/esabil/Documents/files/64050199824_20190829_16393162_HesapOzeti.pdf";//isbank
             String sInFilePath  = "/Users/esabil/Documents/files/YKB_Hesap_Hareket_Detay_64265549_TL.pdf";//isbank
@@ -87,6 +133,23 @@ public class BbAppDekonts
             System.out.println(e.getMessage());
         }
 
+    }
+
+    static private JedisPoolConfig buildPoolConfig() 
+    {
+        final JedisPoolConfig poolConfig = new JedisPoolConfig();
+        
+        poolConfig.setMaxTotal(128);
+        poolConfig.setMaxIdle(128);
+        poolConfig.setMinIdle(16);
+        poolConfig.setTestOnBorrow(true);
+        poolConfig.setTestOnReturn(true);
+        poolConfig.setTestWhileIdle(true);
+        poolConfig.setMinEvictableIdleTimeMillis(Duration.ofSeconds(60).toMillis());
+        poolConfig.setTimeBetweenEvictionRunsMillis(Duration.ofSeconds(30).toMillis());
+        poolConfig.setNumTestsPerEvictionRun(3);
+        poolConfig.setBlockWhenExhausted(true);
+        return poolConfig;
     }
     
     public static String prepareMessage(String pUserId, 
