@@ -85,7 +85,7 @@ public class BbAppDekonts
             String sOutFilePath = "/Users/esabil/Documents/files/dekont_summary.txt";//output file
 
 
-            String sURL = "http://localhost:8080/bb-wapi-dekont-converter/rest/bulbuller/dekont/api/neweodentry/?";
+            String sURL = "http://localhost:8080/bb-rest-api/rest/bulbuller/dekont/api/neweodentry/?";
 
             //sURL += Util.url.addURLParam("userid"   , ShipShukUser.getUserId(true, null) , false, true);
             String sMsg = "";
