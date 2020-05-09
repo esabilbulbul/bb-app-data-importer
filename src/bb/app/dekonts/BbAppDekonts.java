@@ -91,8 +91,8 @@ public class BbAppDekonts
             String sMsg = "";
 //            sMsg = prepareMessage("1", "en", "tr", "141230", "1", "2019", "1", "12","1200.40");
 
-            //String sFileKasa = "/Users/esabil/Documents/files/kasa2018_4.txt";
             String sFileKasa = "/Users/esabil/Documents/files/kasa2020_1.txt";
+            //String sFileKasa = "/Users/esabil/Documents/files/kasa2020_1.txt";
             BufferedReader reader = new BufferedReader(new FileReader(sFileKasa)); 
             String line = reader.readLine();
             int i = 0;
@@ -108,7 +108,8 @@ public class BbAppDekonts
 
                 if (i!=0)
                 {
-                    sMsg = prepareMessage("1", "en", "tr", "141230", "1", sYear, sMonth, sDay, sAmount);
+                    //test merchant
+                    sMsg = prepareMessage("1", "en", "tr", "141230", "38482645", sYear, sMonth, sDay, sAmount);
 
                     String sResp = Util.HTTP.sendHTTPRequest("POST", sURL, sMsg);
                     System.out.println(line);
@@ -175,5 +176,5 @@ public class BbAppDekonts
         sMsg += "tot="        + pTot;
 
         return sMsg;
-    }
+    }   
 }
