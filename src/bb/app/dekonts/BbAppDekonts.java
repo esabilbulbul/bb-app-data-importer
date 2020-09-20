@@ -9,9 +9,12 @@ import jaxesa.redis.RedisAPI;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Scanner;
+import jaxesa.util.RunTimeOutputs;
 import jaxesa.util.Util;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -29,6 +32,69 @@ public class BbAppDekonts
     {
         try
         {
+
+            //Runtime rt = Runtime.getRuntime();
+            //Process proc = rt.exec("mkdir /Users/ashah/Desktop/new-folder");
+            //printOutput errorReported, outputMessage;
+
+            System.out.println("App is starting");
+
+            try
+            {
+                //String OSName = System.getProperty("os.name");
+                //boolean rc = Util.Sys.isOSMacOS();
+
+                Runtime rt = Runtime.getRuntime();
+                //Process proc = rt.exec("javac");
+                //Process proc = rt.exec("mkdir /Users/test");
+
+                /*
+                Process proc = rt.exec("clamscan /Users/esabil/Documents/files/kasa2020_1.txt");
+                InputStream stderr = proc.getErrorStream();
+                InputStreamReader isr = new InputStreamReader(stderr);
+                BufferedReader br = new BufferedReader(isr);
+                
+                InputStream stdin = proc.getInputStream();
+                InputStreamReader iso = new InputStreamReader(stdin);
+                BufferedReader ou = new BufferedReader(iso);
+                
+                String line = null;
+                */
+                
+                RunTimeOutputs rtos = new RunTimeOutputs();
+                
+                rtos = Util.Sys.executeCommand("clamscan /Users/esabil/Documents/files/kasa2020_1.txt");
+                
+                System.out.println("<OUTPUT>");
+                String line = null;
+                
+                while ( (line = rtos.out.readLine()) != null)
+                    System.out.println(line);
+
+                System.out.println("</OUTPUT>");
+
+                System.out.println("<ERROR>");
+
+                while ( (line = rtos.err.readLine()) != null)
+                    System.out.println(line);
+
+                System.out.println("</ERROR>");
+
+                int exitVal = rtos.proc.waitFor();
+                System.out.println("Process exitValue: " + exitVal);
+                
+                
+                /*
+                errorReported = rte.getStreamWrapper(proc.getErrorStream(), "ERROR");
+                outputMessage = rte.getStreamWrapper(proc.getInputStream(), "OUTPUT");
+                errorReported.start();
+                outputMessage.start();
+                */
+            }
+            catch(Exception e)
+            {
+                
+            }
             //================================================================
             // 
             // REDIS TEST
@@ -108,8 +174,8 @@ public class BbAppDekonts
 
                 if (i!=0)
                 {
-                    //test merchant
-                    sMsg = prepareMessage("1", "en", "tr", "141230", "38482645", sYear, sMonth, sDay, sAmount);
+                    //test merchant (online sales set 0 for now)
+                    sMsg = prepareMessage("1", "en", "tr", "141230", "38482645", sYear, sMonth, sDay, sAmount, "0");
 
                     String sResp = Util.HTTP.sendHTTPRequest("POST", sURL, sMsg);
                     System.out.println(line);
@@ -161,7 +227,8 @@ public class BbAppDekonts
                                         String pYear,
                                         String pMonth,
                                         String pDay,
-                                        String pTot)
+                                        String pTot,
+                                        String pOnl)
     {
         String sMsg = "";
 
@@ -173,7 +240,8 @@ public class BbAppDekonts
         sMsg += "year="       + pYear   + "&";
         sMsg += "month="      + pMonth  + "&";
         sMsg += "day="        + pDay    + "&";
-        sMsg += "tot="        + pTot;
+        sMsg += "tot="        + pTot + "&";
+        sMsg += "onl="        + pOnl;
 
         return sMsg;
     }   
