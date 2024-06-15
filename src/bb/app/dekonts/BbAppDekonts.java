@@ -8,6 +8,8 @@ package bb.app.dekonts;
 import bb.app.account.AccountMisc;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.sun.tools.javac.util.StringUtils;
 import jaxesa.redis.RedisAPI;
 import java.io.BufferedReader;
@@ -24,7 +26,9 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
+import java.util.Set;
 import jaxesa.barcode.LabelItem;
 import jaxesa.email.JEmail;
 import jaxesa.util.RunTimeOutputs;
@@ -62,6 +66,18 @@ public class BbAppDekonts
             long ilen = str.length();
             
             Util.JSON.isJSONArray("[]");
+            
+            String sTest = "{\"a\":1,\"b\":2}";
+            sTest = "[\"26\", \"001\", \"010\", \"013\", \"019\", \"023\", \"029\", \"102\", \"213\", \"214\", \"TEST\"]";
+            JsonArray aKys = Util.JSON.toArray(sTest);
+            
+            JsonObject aKeys = Util.JSON.toJsonObject(sTest);
+            Set<String> oKey = aKeys.keySet();
+            Iterator<String> it = oKey.iterator();
+            while(it.hasNext())
+            {
+               System.out.println(it.next());
+            }
             
             String sRows = "[{\"a\":1},{\"b\":2}]";
             JsonArray jsRows = new JsonArray();
@@ -266,14 +282,15 @@ public class BbAppDekonts
             String sOutFilePath = "/Users/esabil/Documents/files/dekont_summary.txt";//output file
 
 
-            String sURL = "http://localhost:8080/bb-rest-api/rest/bulbuller/dekont/api/neweodentry/?";
+            String sURL = "http://localhost:8080/bb-rest-api/rest/api/biz/bb/eod/neweodentry/?";
 
             //sURL += Util.url.addURLParam("userid"   , ShipShukUser.getUserId(true, null) , false, true);
             String sMsg = "";
 //            sMsg = prepareMessage("1", "en", "tr", "141230", "1", "2019", "1", "12","1200.40");
 
-            String sFileKasa = "/Users/esabil/Documents/files/kasa2020_1.txt";
             //String sFileKasa = "/Users/esabil/Documents/files/kasa2020_1.txt";
+            //String sFileKasa = "D:\\onedrive\\OneDrive - axe-pay.com\\NEOTEMP\\DOC\\BULBULLER\\KASA\\BULBULLER_2022.txt";
+            String sFileKasa = "D:\\onedrive\\OneDrive - axe-pay.com\\NEOTEMP\\DOC\\BULBULLER\\KASA\\BULBULLER_2022.txt";
             BufferedReader reader = new BufferedReader(new FileReader(sFileKasa)); 
             String line = reader.readLine();
             int i = 0;
@@ -289,8 +306,13 @@ public class BbAppDekonts
 
                 if (i!=0)
                 {
+                    if (sMonth.equals("05")==true)
+                    {
+                        
+                    }
+                            
                     //test merchant (online sales set 0 for now)
-                    sMsg = prepareMessage("1", "en", "tr", "141230", "38482645", sYear, sMonth, sDay, sAmount, "0");
+                    sMsg = prepareMessage("38482645", "en", "tr", "141230",  sYear, sMonth, sDay, sAmount, "0");
 
                     String sResp = Util.HTTP.sendHTTPRequest("POST", sURL, sMsg);
                     System.out.println(line);
@@ -334,11 +356,11 @@ public class BbAppDekonts
         return poolConfig;
     }
     
-    public static String prepareMessage(String pUserId, 
+    public static String prepareMessage(String pAccId, 
                                         String pLang, 
                                         String pCountry, 
                                         String pSessionId, 
-                                        String pMrcId, 
+                                        //String pMrcId, 
                                         String pYear,
                                         String pMonth,
                                         String pDay,
@@ -347,16 +369,22 @@ public class BbAppDekonts
     {
         String sMsg = "";
 
-        sMsg += "userid="     + pUserId  + "&";
-        sMsg += "lang="       + pLang + "&";;
+        //sMsg += "userid="     + pUserId  + "&";
+        sMsg += "aid="        + pAccId  + "&";
+        sMsg += "lang="       + pLang + "&";
         sMsg += "country="    + pCountry + "&";
         sMsg += "sessionid="  + pSessionId  + "&";
-        sMsg += "mrcid="      + pMrcId  + "&";
+        //sMsg += "mrcid="      + pMrcId  + "&";
         sMsg += "year="       + pYear   + "&";
         sMsg += "month="      + pMonth  + "&";
         sMsg += "day="        + pDay    + "&";
-        sMsg += "tot="        + pTot + "&";
-        sMsg += "onl="        + pOnl;
+
+        sMsg += "src="        + "MNL"    + "&";
+        sMsg += "csh="        + pTot  + "&";
+        sMsg += "crd="        + "0"  + "&";
+        sMsg += "wre="        + "0"  + "&";
+        sMsg += "int="        + pOnl  + "&";
+        sMsg += "oth="        + "0";
 
         return sMsg;
     }   
